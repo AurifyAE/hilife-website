@@ -1,6 +1,6 @@
 import type { StaticImageData } from "next/image";
-import livingRoom from "@/assets/photos/hero/living-room.jpg";
-import loungeSpace from "@/assets/photos/hero/lounge-space.jpg";
+import livingRoom from "@/assets/photos/hero/living-room.webp";
+import loungeSpace from "@/assets/photos/hero/lounge-space.webp";
 
 export type HeroSlide = {
   id: string;

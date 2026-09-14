@@ -53,6 +53,9 @@
   --text-eyebrow--letter-spacing: 0.2em;
 
   --radius-brand: 2.5rem;
+
+  /* Side gutter used by container-site; also gives px-gutter, pl-gutter, scroll-px-gutter… */
+  --spacing-gutter: clamp(1.25rem, 0.8rem + 2.2vw, 3rem);
 }
 
 @layer base {
@@ -88,12 +91,50 @@
   }
 }
 
+@layer components {
+  /* Bento tile description: always open on touch screens, slides open on hover or focus elsewhere */
+  .bento-desc {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition:
+      grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bento-desc > * {
+    overflow: hidden;
+  }
+
+  @media (hover: hover) {
+    .bento-tile:not(:hover):not(:focus-within) .bento-desc {
+      grid-template-rows: 0fr;
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bento-desc {
+      transition: none;
+    }
+  }
+}
+
+/* Hidden until its GSAP intro runs; layout.tsx has a <noscript> fallback that shows it */
+@utility intro-hidden {
+  opacity: 0;
+}
+
 /* Page width + side padding */
 @utility container-site {
   width: 100%;
   max-width: 84rem;
   margin-inline: auto;
-  padding-inline: clamp(1.25rem, 0.8rem + 2.2vw, 3rem);
+  padding-inline: var(--spacing-gutter);
+}
+
+/* Left padding that lines content up with container-site while the element runs to the right edge */
+@utility pl-edge {
+  padding-left: max(var(--spacing-gutter), calc((100% - 84rem) / 2 + var(--spacing-gutter)));
 }
 
 /* Vertical rhythm between page sections */
@@ -132,6 +173,49 @@
       var(--_s) bottom 0 / var(--_c) var(--_c) no-repeat,
     radial-gradient(circle at bottom right, #0000 calc(var(--_r) - 0.5px), #000 var(--_r)) right
       calc(var(--_s) - var(--_r)) bottom calc(var(--_s) - var(--_r)) / var(--_r) var(--_r) no-repeat;
+}
+
+/*
+ * Collections bento. Areas are spelled out per breakpoint so every cell is filled (no holes):
+ * phone 2×8 = 16 cells, tablet 3×7 = 21, desktop 4×5 = 20.
+ */
+@utility bento-collections {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto repeat(7, 11rem);
+  grid-template-areas:
+    "intro intro"
+    "sofas sofas"
+    "chairs arm"
+    "chairs bar"
+    "sets sets"
+    "tables office"
+    "tables pouffes"
+    "acc acc";
+
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: auto repeat(6, clamp(11rem, 22vw, 15rem));
+    grid-template-areas:
+      "intro intro intro"
+      "sofas sofas chairs"
+      "sofas sofas chairs"
+      "arm bar tables"
+      "sets sets tables"
+      "office pouffes pouffes"
+      "acc acc acc";
+  }
+
+  @media (width >= 64rem) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: repeat(5, clamp(12rem, 16vw, 16rem));
+    grid-template-areas:
+      "intro intro sofas sofas"
+      "intro intro sofas sofas"
+      "chairs arm bar tables"
+      "chairs sets sets tables"
+      "office pouffes acc acc";
+  }
 }
 
 /* Brochure image shape: large top-right and bottom-left corners */

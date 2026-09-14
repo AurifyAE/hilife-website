@@ -9,6 +9,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { NotchCard } from "@/components/ui/notch-card";
 import { heroSlides } from "@/data/hero-slides";
 import { cx } from "@/lib/cx";
+import { prefersReducedMotion } from "@/lib/motion";
 import { quoteHref } from "@/lib/site";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 
@@ -26,6 +27,7 @@ export function Hero() {
   const mediaRefs = useRef<(HTMLDivElement | null)[]>([]);
   const lineRefs = useRef<(HTMLSpanElement | null)[][]>([]);
   const cardRef = useRef<HTMLDivElement>(null);
+  const buttonsRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<SVGCircleElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const touchStartX = useRef<number | null>(null);
@@ -40,6 +42,25 @@ export function Hero() {
       heroSlides.forEach((_, index) => {
         if (index !== 0) gsap.set(lineRefs.current[index], { yPercent: 110 });
       });
+
+      // Intro, timed to follow the header drop-in: photo settles, headline rises, then buttons and card
+      const headline = slideRefs.current[0]?.querySelector("h2");
+      const reveal = [buttonsRef.current, cardRef.current];
+      if (headline) gsap.set(headline, { opacity: 1 });
+      if (prefersReducedMotion()) {
+        gsap.set(reveal, { opacity: 1 });
+        return;
+      }
+      gsap
+        .timeline()
+        .from(mediaRefs.current[0], { scale: 1.08, duration: 2.4, ease: "power2.out" }, 0)
+        .from(lineRefs.current[0], { yPercent: 110, duration: 1.2, stagger: 0.1, ease: "power4.out" }, 0.45)
+        .fromTo(
+          reveal,
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out" },
+          0.95,
+        );
     },
     { scope: stageRef },
   );
@@ -120,6 +141,7 @@ export function Hero() {
     <section
       aria-roledescription="carousel"
       aria-label="Featured spaces"
+      data-header-theme="glass"
       className="px-1 sm:px-1.5"
       onTouchStart={(event) => {
         touchStartX.current = event.touches[0].clientX;
@@ -180,7 +202,7 @@ export function Hero() {
               Only side-specific padding here: mixing the p shorthand with pb or pr lets the shorthand win.
             */}
             <div className="absolute inset-x-0 bottom-0 pr-5 pb-[5.5rem] pl-5 sm:pr-8 sm:pb-[8rem] sm:pl-8 lg:pr-[24rem] lg:pb-[9.5rem] lg:pl-12">
-              <h2 className="text-display text-white">
+              <h2 className={cx("text-display text-white", index === 0 && "intro-hidden")}>
                 {slide.headline.map((line, lineIndex) => (
                   // Each line moves inside its own mask; the padding keeps descenders visible
                   <span key={line} className="-mb-[0.12em] block overflow-hidden pb-[0.12em]">
@@ -200,7 +222,10 @@ export function Hero() {
         ))}
 
         {/* Two equal columns on phones so both buttons always fit on one row */}
-        <div className="absolute inset-x-0 bottom-0 z-10 grid grid-cols-2 gap-2 p-5 sm:right-auto sm:flex sm:gap-4 sm:p-8 lg:p-12">
+        <div
+          ref={buttonsRef}
+          className="intro-hidden absolute inset-x-0 bottom-0 z-10 grid grid-cols-2 gap-2 p-5 sm:right-auto sm:flex sm:gap-4 sm:p-8 lg:p-12"
+        >
           <ButtonLink href={quoteHref} variant="copper" size="sm" className="sm:h-14 sm:px-8 sm:text-body">
             Request a Quote
           </ButtonLink>
@@ -215,7 +240,7 @@ export function Hero() {
         </div>
 
         {/* Card only from lg: on tablets it would collide with the buttons */}
-        <div ref={cardRef} className="absolute right-0 bottom-0 z-10 hidden p-12 lg:block">
+        <div ref={cardRef} className="intro-hidden absolute right-0 bottom-0 z-10 hidden p-12 lg:block">
           <NotchCard
             onClick={() => goTo(upcoming)}
             label={`Next slide: ${upcomingSlide.headline.join(" ")}`}

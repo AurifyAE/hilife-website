@@ -1,13 +1,13 @@
 import type { StaticImageData } from "next/image";
-import accessoriesAppliances from "@/assets/photos/collections/accessories-appliances.jpg";
-import armChairs from "@/assets/photos/collections/arm-chairs.jpg";
-import barStools from "@/assets/photos/collections/bar-stools.jpg";
-import chairs from "@/assets/photos/collections/chairs.jpg";
-import furnitureSets from "@/assets/photos/collections/furniture-sets.jpg";
-import officeChairs from "@/assets/photos/collections/office-chairs.jpg";
-import pouffes from "@/assets/photos/collections/pouffes.jpg";
-import sofas from "@/assets/photos/collections/sofas.jpg";
-import tables from "@/assets/photos/collections/tables.jpg";
+import accessoriesAppliances from "@/assets/photos/collections/accessories-appliances.webp";
+import armChairs from "@/assets/photos/collections/arm-chairs.webp";
+import barStools from "@/assets/photos/collections/bar-stools.webp";
+import chairs from "@/assets/photos/collections/chairs.webp";
+import furnitureSets from "@/assets/photos/collections/furniture-sets.webp";
+import officeChairs from "@/assets/photos/collections/office-chairs.webp";
+import pouffes from "@/assets/photos/collections/pouffes.webp";
+import sofas from "@/assets/photos/collections/sofas.webp";
+import tables from "@/assets/photos/collections/tables.webp";
 
 export type Collection = {
   slug: string;
