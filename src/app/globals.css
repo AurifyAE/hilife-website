@@ -1,26 +1,140 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Hi-Life design tokens: colours taken from the 2026 rental catalogue */
+@theme {
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+
+  --color-forest-950: #0d231c;
+  --color-forest-900: #153630;
+  --color-forest-800: #1c4439;
+  --color-forest-700: #28574a;
+  --color-forest-100: #e3ece7;
+
+  --color-copper-700: #7f5230;
+  --color-copper-600: #9a6639;
+  --color-copper-500: #b27c4b;
+  --color-copper-300: #d9b08a;
+  --color-copper-100: #f3e8dc;
+
+  --color-cream-50: #fcfbf8;
+  --color-cream-100: #f6f3ed;
+  --color-cream-200: #ebe5da;
+
+  --color-ink: #17211d;
+  --color-stone: #5d6863;
+
+  /* Type scale: use text-display, text-h1 … text-h6, text-lead, text-body, text-small, text-eyebrow */
+  --text-display: clamp(3.25rem, 1rem + 7vw, 7.5rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.03em;
+  --text-h1: clamp(2.25rem, 1.7rem + 2.4vw, 3.75rem);
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: clamp(1.875rem, 1.5rem + 1.6vw, 2.875rem);
+  --text-h2--line-height: 1.12;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h3: clamp(1.5rem, 1.3rem + 0.8vw, 2rem);
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h4: 1.375rem;
+  --text-h4--line-height: 1.3;
+  --text-h5: 1.125rem;
+  --text-h5--line-height: 1.4;
+  --text-h6: 1rem;
+  --text-h6--line-height: 1.45;
+  --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --text-lead--line-height: 1.65;
+  --text-body: 1rem;
+  --text-body--line-height: 1.7;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.6;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.2;
+  --text-eyebrow--letter-spacing: 0.2em;
+
+  --radius-brand: 2.5rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    @apply bg-cream-50 font-sans text-body text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-medium text-balance;
+  }
+
+  p {
+    @apply text-pretty;
+  }
+
+  ::selection {
+    @apply bg-copper-300 text-forest-950;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-copper-500);
+    outline-offset: 3px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Page width + side padding */
+@utility container-site {
+  width: 100%;
+  max-width: 84rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 0.8rem + 2.2vw, 3rem);
+}
+
+/* Vertical rhythm between page sections */
+@utility section-y {
+  padding-block: clamp(4.5rem, 3.2rem + 5vw, 8rem);
+}
+
+@utility eyebrow {
+  font-size: var(--text-eyebrow);
+  line-height: var(--text-eyebrow--line-height);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/*
+ * Scooped bottom-right corner used by <NotchCard>. The notch is cut with a mask, so whatever is
+ * behind the card shows through. Tune per card with --notch-size, --notch-gap and --notch-corner.
+ * Layers: top block, row + convex corner above the notch, left block, column + convex corner
+ * beside the notch, and the rounded inner corner of the notch itself.
+ */
+@utility notch-mask {
+  --_s: var(--notch-size, 3.5rem);
+  --_g: var(--notch-gap, 0.625rem);
+  --_c: var(--notch-corner, 1rem);
+  --_r: calc((var(--_s) - var(--_g)) / 2 + var(--_g));
+  mask:
+    linear-gradient(#000 0 0) left 0 top 0 / 100% calc(100% - var(--_s) - var(--_c)) no-repeat,
+    linear-gradient(#000 0 0) left 0 bottom var(--_s) / calc(100% - var(--_c)) var(--_c) no-repeat,
+    radial-gradient(circle at top left, #000 calc(var(--_c) - 0.5px), #0000 var(--_c)) right 0
+      bottom var(--_s) / var(--_c) var(--_c) no-repeat,
+    linear-gradient(#000 0 0) left 0 bottom 0 / calc(100% - var(--_s) - var(--_c)) var(--_s) no-repeat,
+    linear-gradient(#000 0 0) right var(--_s) bottom var(--_c) / var(--_c)
+      calc(var(--_s) - var(--_c)) no-repeat,
+    radial-gradient(circle at top left, #000 calc(var(--_c) - 0.5px), #0000 var(--_c)) right
+      var(--_s) bottom 0 / var(--_c) var(--_c) no-repeat,
+    radial-gradient(circle at bottom right, #0000 calc(var(--_r) - 0.5px), #000 var(--_r)) right
+      calc(var(--_s) - var(--_r)) bottom calc(var(--_s) - var(--_r)) / var(--_r) var(--_r) no-repeat;
+}
+
+/* Brochure image shape: large top-right and bottom-left corners */
+@utility shape-brand {
+  border-radius: 0.75rem var(--radius-brand) 0.75rem var(--radius-brand);
 }
