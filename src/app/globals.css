@@ -19,6 +19,8 @@
   --color-cream-50: #fcfbf8;
   --color-cream-100: #f6f3ed;
   --color-cream-200: #ebe5da;
+  /* Backdrop colour of the product shoot, so cut-outs and studio shots sit on the same tone */
+  --color-studio: #ece8df;
 
   --color-ink: #17211d;
   --color-stone: #5d6863;
@@ -53,6 +55,12 @@
   --text-eyebrow--letter-spacing: 0.2em;
 
   --radius-brand: 2.5rem;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
 
   /* Side gutter used by container-site; also gives px-gutter, pl-gutter, scroll-px-gutter… */
   --spacing-gutter: clamp(1.25rem, 0.8rem + 2.2vw, 3rem);
