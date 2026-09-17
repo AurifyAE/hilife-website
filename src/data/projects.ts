@@ -15,6 +15,8 @@ export type Project = {
   title: string;
   location: string;
   eventType: string;
+  /** Event type page this project belongs to (src/data/events.ts) */
+  eventSlug: string;
   summary: string;
   stats: ProjectStat[];
   collections: string[];
@@ -31,6 +33,7 @@ export const featuredProjects: Project[] = [
     title: "Networking lounge for a tech summit",
     location: "Dubai",
     eventType: "Conference",
+    eventSlug: "corporate-events",
     summary:
       "High tables, bar stools and soft seating zones that kept two days of networking moving between sessions.",
     stats: [
@@ -48,6 +51,7 @@ export const featuredProjects: Project[] = [
     title: "Garden wedding reception lounge",
     location: "Abu Dhabi",
     eventType: "Wedding",
+    eventSlug: "weddings",
     summary:
       "Warm timber arm chairs and cream upholstery arranged into relaxed lounge corners around the dance floor.",
     stats: [
@@ -65,6 +69,7 @@ export const featuredProjects: Project[] = [
     title: "Show apartment fit-out",
     location: "Sharjah",
     eventType: "Fit-out project",
+    eventSlug: "fit-out-projects",
     summary:
       "A complete furnished look for two show units, delivered, styled and collected at the end of the sales launch.",
     stats: [

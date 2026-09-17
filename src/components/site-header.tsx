@@ -10,6 +10,7 @@ import { ArrowUpRightIcon, CloseIcon, MenuIcon } from "@/components/icons";
 import { Logo } from "@/components/logo";
 import { ButtonLink } from "@/components/ui/button-link";
 import { cx } from "@/lib/cx";
+import { useEnquiry } from "@/lib/enquiry";
 import { getLenis } from "@/lib/lenis";
 import { prefersReducedMotion } from "@/lib/motion";
 import { mainNav, quoteHref, site } from "@/lib/site";
@@ -30,6 +31,8 @@ export function SiteHeader() {
   const navRef = useRef<HTMLElement>(null);
   const highlightRef = useRef<HTMLSpanElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  const enquiryCount = useEnquiry().length;
 
   const closeMenu = () => setMenuOpen(false);
   const glass = overGlass && !menuOpen;
@@ -232,7 +235,7 @@ export function SiteHeader() {
               data-intro-item
               className="shrink-0"
             >
-              <Logo />
+              <Logo className={cx("h-10 transition-[height]", SMOOTH, compact ? "sm:h-10" : "sm:h-12")} />
             </Link>
 
             <nav
@@ -279,12 +282,14 @@ export function SiteHeader() {
                 href={quoteHref}
                 data-intro-item
                 className={cx(
-                  "hidden items-center rounded-xl bg-forest-800 px-5 text-small font-semibold whitespace-nowrap text-cream-50 transition-[background-color,height] hover:bg-forest-950 sm:inline-flex",
+                  "hidden items-center gap-2 rounded-xl bg-forest-800 px-5 text-small font-semibold whitespace-nowrap text-cream-50 transition-[background-color,height] hover:bg-forest-950 sm:inline-flex",
                   SMOOTH,
                   compact ? "h-10" : "h-11",
+                  enquiryCount > 0 && "pr-2.5",
                 )}
               >
                 Request a Quote
+                <EnquiryBadge count={enquiryCount} />
               </Link>
               <button
                 type="button"
@@ -330,6 +335,7 @@ export function SiteHeader() {
           <div data-menu-item className="mt-8">
             <ButtonLink href={quoteHref} onClick={closeMenu} variant="forest" className="w-full">
               Request a Quote
+              <EnquiryBadge count={enquiryCount} />
             </ButtonLink>
           </div>
           <div data-menu-item className="mt-auto space-y-1 pt-10 text-small text-stone">
@@ -343,5 +349,16 @@ export function SiteHeader() {
         </div>
       </div>
     </>
+  );
+}
+
+/** Number of products on the visitor's enquiry list, shown on the quote buttons */
+function EnquiryBadge({ count }: { count: number }) {
+  if (count === 0) return null;
+  return (
+    <span className="grid h-6 min-w-6 place-items-center rounded-lg bg-copper-500 px-1.5 text-[0.75rem] font-semibold text-white tabular-nums motion-safe:animate-[menu-in_300ms_cubic-bezier(0.22,1,0.36,1)]">
+      {count}
+      <span className="sr-only">{count === 1 ? " item" : " items"} in your enquiry</span>
+    </span>
   );
 }

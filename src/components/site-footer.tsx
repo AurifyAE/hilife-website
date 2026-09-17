@@ -89,7 +89,7 @@ export function SiteFooter() {
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
           <div className="sm:col-span-2 lg:col-span-4">
             <Link href="/" aria-label={`${site.name} home`} className="inline-block">
-              <Logo tone="light" />
+              <Logo tone="light" className="h-14" />
             </Link>
             <p className="mt-6 max-w-xs text-small text-cream-50/60">
               Premium rental furniture for events, exhibitions and fit-outs across the UAE.

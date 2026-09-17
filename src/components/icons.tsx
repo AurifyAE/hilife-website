@@ -53,6 +53,39 @@ export function CheckIcon(props: IconProps) {
   );
 }
 
+export function ChevronDownIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  );
+}
+
+export function PaperclipIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="m20 11.5-8.2 8.2a5 5 0 0 1-7.1-7.1l8.5-8.5a3.3 3.3 0 0 1 4.7 4.7l-8.5 8.5a1.7 1.7 0 0 1-2.4-2.4l7.8-7.8" />
+    </svg>
+  );
+}
+
+export function AlertIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7.5v5.5M12 16.5h.01" />
+    </svg>
+  );
+}
+
+export function TrashIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3" />
+    </svg>
+  );
+}
+
 export function PlusIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>

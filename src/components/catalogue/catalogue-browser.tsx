@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useEffectEvent, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { ProductCard } from "@/components/catalogue/product-card";
 import { CheckIcon, CloseIcon, SearchIcon, SlidersIcon } from "@/components/icons";
+import { Select, type SelectOption } from "@/components/ui/select";
 import { collections } from "@/data/collections";
 import { colourSwatch, isOutdoor, type Product } from "@/lib/catalogue";
 import { cx } from "@/lib/cx";
@@ -15,6 +16,12 @@ type Sort = "featured" | "name" | "name-desc";
 type Filters = { q: string; colours: string[]; setting: Setting; sort: Sort };
 
 const NO_FILTERS: Filters = { q: "", colours: [], setting: "all", sort: "featured" };
+
+const SORT_OPTIONS: SelectOption<Sort>[] = [
+  { value: "featured", label: "Featured" },
+  { value: "name", label: "Name A–Z" },
+  { value: "name-desc", label: "Name Z–A" },
+];
 
 /** Cards rendered per batch: fills whole rows in the 2- and 3-column grids */
 const PAGE_SIZE = 18;
@@ -304,18 +311,13 @@ function CatalogueView({
             )}
           </button>
 
-          <label className="ml-auto flex items-center gap-2 text-small text-stone">
-            <span className="hidden sm:inline">Sort</span>
-            <select
-              value={filters.sort}
-              onChange={(event) => update({ sort: event.target.value as Sort })}
-              className="h-11 cursor-pointer rounded-full border border-forest-900/15 bg-white px-4 text-small text-ink focus:border-forest-900 focus:outline-none"
-            >
-              <option value="featured">Featured</option>
-              <option value="name">Name A–Z</option>
-              <option value="name-desc">Name Z–A</option>
-            </select>
-          </label>
+          <Select
+            label="Sort"
+            value={filters.sort}
+            options={SORT_OPTIONS}
+            onChange={(sort) => update({ sort })}
+            className="ml-auto"
+          />
         </div>
 
         <div className="mt-5 flex flex-wrap items-center gap-2">

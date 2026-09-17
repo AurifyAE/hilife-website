@@ -45,25 +45,30 @@ export function Hero() {
 
       // Intro, timed to follow the header drop-in: photo settles, headline rises, then buttons and card
       const headline = slideRefs.current[0]?.querySelector("h2");
-      const reveal = [buttonsRef.current, cardRef.current];
       if (headline) gsap.set(headline, { opacity: 1 });
       if (prefersReducedMotion()) {
-        gsap.set(reveal, { opacity: 1 });
+        gsap.set(buttonsRef.current, { opacity: 1 });
+        gsap.set(cardRef.current, { "--glass": 1 });
+        gsap.set(cardContent(), { opacity: 1 });
         return;
       }
       gsap
         .timeline()
         .from(mediaRefs.current[0], { scale: 1.08, duration: 2.4, ease: "power2.out" }, 0)
         .from(lineRefs.current[0], { yPercent: 110, duration: 1.2, stagger: 0.1, ease: "power4.out" }, 0.45)
-        .fromTo(
-          reveal,
-          { y: 24, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out" },
-          0.95,
-        );
+        .fromTo(buttonsRef.current, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, 0.95)
+        .fromTo(cardRef.current, { y: 24, "--glass": 0 }, { y: 0, "--glass": 1, duration: 1, ease: "power3.out" }, 1.1)
+        .fromTo(cardContent(), { opacity: 0 }, { opacity: 1, duration: 1, ease: "power3.out" }, 1.1);
     },
     { scope: stageRef },
   );
+
+  // The card is frosted glass. Browsers switch backdrop blur off on anything with opacity below 1,
+  // so fading the card itself made the blur vanish and snap back at the end. Instead --glass (0–1)
+  // fades the blur and tint, and only the photo, caption and button icon use opacity.
+  function cardContent() {
+    return cardRef.current ? [...cardRef.current.querySelectorAll("[data-card-content]")] : [];
+  }
 
   // Stop a running transition if the hero unmounts
   useEffect(() => () => void timelineRef.current?.kill(), []);
@@ -103,7 +108,8 @@ export function Hero() {
       .timeline({ defaults: { ease: "power2.inOut" }, onComplete: finish })
       // 1. Headline and card fade out, drifting down
       .to(outLines, { yPercent: 110, opacity: 0, duration: 0.9, stagger: 0.06, ease: "power2.in" }, 0)
-      .to(card, { y: 48, opacity: 0, duration: 0.9, ease: "power2.in" }, 0.05)
+      .to(card, { y: 48, "--glass": 0, duration: 0.9, ease: "power2.in" }, 0.05)
+      .to(cardContent(), { opacity: 0, duration: 0.9, ease: "power2.in" }, 0.05)
       // 2. The photo sinks and fades while the next one settles from a slight zoom
       .to(outMedia, { yPercent: 6, duration: 1.6 }, 0.35)
       .to(outSlide, { opacity: 0, duration: 1.4 }, 0.45)
@@ -112,7 +118,8 @@ export function Hero() {
       .call(() => setCurrent(next), undefined, 1)
       // 3. New headline rises in, then the card returns
       .to(inLines, { yPercent: 0, duration: 1.2, stagger: 0.1, ease: "power3.out" }, 1.3)
-      .to(card, { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, 1.75);
+      .to(card, { y: 0, "--glass": 1, duration: 1, ease: "power3.out" }, 1.75)
+      .to(cardContent(), { opacity: 1, duration: 1, ease: "power3.out" }, 1.75);
   }
 
   const advance = useEffectEvent(() => goTo((current + 1) % count));
@@ -240,15 +247,19 @@ export function Hero() {
         </div>
 
         {/* Card only from lg: on tablets it would collide with the buttons */}
-        <div ref={cardRef} className="intro-hidden absolute right-0 bottom-0 z-10 hidden p-12 lg:block">
+        {/* glass-hidden: starts with no blur or tint until the intro fades them in (see cardContent) */}
+        <div ref={cardRef} className="glass-hidden absolute right-0 bottom-0 z-10 hidden p-12 lg:block">
           <NotchCard
             onClick={() => goTo(upcoming)}
             label={`Next slide: ${upcomingSlide.headline.join(" ")}`}
             className="w-64 lg:w-72"
-            cardClassName="rounded-[1.25rem] bg-copper-600/50 p-2.5 text-white backdrop-blur-md transition-colors duration-300 group-hover:bg-copper-700/70"
+            // No background transition here, or the tint would trail the blur while --glass animates;
+            // the hover darkening is an overlay with its own transition instead
+            cardClassName="rounded-[1.25rem] [background-color:rgb(154_102_57/calc(0.5*var(--glass)))] p-2.5 text-white [backdrop-filter:blur(calc(12px*var(--glass)))] after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:bg-copper-700/45 after:opacity-0 after:transition-opacity after:duration-300 group-hover:after:opacity-[var(--glass)]"
+            actionClassName="[background-color:rgb(255_255_255/calc(0.8*var(--glass)))] text-copper-700 [backdrop-filter:blur(calc(12px*var(--glass)))] group-hover:[background-color:rgb(255_255_255/var(--glass))]"
             notch={{ size: "3.25rem" }}
             icon={
-              <>
+              <span data-card-content className="intro-hidden absolute inset-0 grid place-items-center">
                 {/* Countdown to the next slide */}
                 <svg viewBox="0 0 40 40" aria-hidden className="absolute inset-0 size-full -rotate-90">
                   <circle cx="20" cy="20" r="18" fill="none" strokeWidth="1.5" className="stroke-copper-700/20" />
@@ -267,10 +278,10 @@ export function Hero() {
                   />
                 </svg>
                 <ArrowUpRightIcon className="size-[45%]" />
-              </>
+              </span>
             }
           >
-            <span className="relative block aspect-[16/10] overflow-hidden rounded-xl">
+            <span data-card-content className="intro-hidden relative block aspect-[16/10] overflow-hidden rounded-xl">
               {/* Every thumbnail stays mounted so switching previews never waits on a download */}
               {heroSlides.map((slide, index) => (
                 <Image
@@ -288,7 +299,7 @@ export function Hero() {
                 />
               ))}
             </span>
-            <span className="mt-3 block max-w-[10rem] px-1.5 pb-3 text-small leading-snug">
+            <span data-card-content className="intro-hidden mt-3 block max-w-[10rem] px-1.5 pb-3 text-small leading-snug">
               {upcomingSlide.headline.join(" ")}
             </span>
           </NotchCard>

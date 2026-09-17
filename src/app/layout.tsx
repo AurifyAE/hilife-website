@@ -22,7 +22,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1f4a3b",
+  // Brand green from the logo
+  themeColor: "#1c4439",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -31,7 +32,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         {/* Without JavaScript the intro never runs, so show everything it would have revealed */}
         <noscript
-          dangerouslySetInnerHTML={{ __html: "<style>.intro-hidden{opacity:1!important}</style>" }}
+          dangerouslySetInnerHTML={{
+            __html: "<style>.intro-hidden{opacity:1!important}.glass-hidden{--glass:1!important}</style>",
+          }}
         />
         <SmoothScroll />
         <a

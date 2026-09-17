@@ -8,10 +8,13 @@ import { useRef } from "react";
 import { ArrowRightIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/button-link";
 import { NotchCard } from "@/components/ui/notch-card";
+import { collections } from "@/data/collections";
 import { eventTypes } from "@/data/events";
 import { quoteHref } from "@/lib/site";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+const collectionName = (slug: string) => collections.find((collection) => collection.slug === slug)?.name ?? slug;
 
 export function EventsSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -173,12 +176,12 @@ export function EventsSection() {
                   <h3 className="mt-1 text-h4 text-cream-50">{event.name}</h3>
                   <p className="mt-2 text-small text-cream-50/65">{event.description}</p>
                   <ul className="mt-3 flex flex-wrap gap-1.5" aria-label={`Suggested for ${event.name}`}>
-                    {event.collections.map((collection) => (
+                    {event.collections.map((slug) => (
                       <li
-                        key={collection}
+                        key={slug}
                         className="rounded-full border border-cream-50/20 px-2.5 py-0.5 text-[0.75rem] text-cream-50/80"
                       >
-                        {collection}
+                        {collectionName(slug)}
                       </li>
                     ))}
                   </ul>

@@ -84,3 +84,9 @@ export function setEnquiryQuantity(code: string, quantity: number) {
 export function removeFromEnquiry(code: string) {
   setEnquiryQuantity(code, 0);
 }
+
+/** Empties the list once the quote request has been sent */
+export function clearEnquiry() {
+  load();
+  commit(EMPTY);
+}

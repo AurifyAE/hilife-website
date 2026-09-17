@@ -62,6 +62,14 @@
     }
   }
 
+  /* Dropdown menus drop in from just under their trigger */
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-0.375rem) scale(0.98);
+    }
+  }
+
   /* Side gutter used by container-site; also gives px-gutter, pl-gutter, scroll-px-gutter… */
   --spacing-gutter: clamp(1.25rem, 0.8rem + 2.2vw, 3rem);
 }
@@ -132,6 +140,14 @@
   opacity: 0;
 }
 
+/*
+ * Frosted glass that fades in from nothing: children scale their blur and tint by --glass (0–1).
+ * Opacity can't be used for this, because backdrop blur switches off below opacity 1.
+ */
+@utility glass-hidden {
+  --glass: 0;
+}
+
 /* Page width + side padding */
 @utility container-site {
   width: 100%;
@@ -162,7 +178,10 @@
  * Scooped bottom-right corner used by <NotchCard>. The notch is cut with a mask, so whatever is
  * behind the card shows through. Tune per card with --notch-size, --notch-gap and --notch-corner.
  * Layers: top block, row + convex corner above the notch, left block, column + convex corner
- * beside the notch, and the rounded inner corner of the notch itself.
+ * beside the notch, and the rounded inner corner of the notch itself. Every layer reaches 1px into
+ * the neighbours it touches (the top block down, the row right, the left block up and right, the
+ * column up and down, the inner corner up and left); edge-to-edge layers leave a hairline gap at
+ * fractional sizes and display scaling.
  */
 @utility notch-mask {
   --_s: var(--notch-size, 3.5rem);
@@ -170,17 +189,19 @@
   --_c: var(--notch-corner, 1rem);
   --_r: calc((var(--_s) - var(--_g)) / 2 + var(--_g));
   mask:
-    linear-gradient(#000 0 0) left 0 top 0 / 100% calc(100% - var(--_s) - var(--_c)) no-repeat,
-    linear-gradient(#000 0 0) left 0 bottom var(--_s) / calc(100% - var(--_c)) var(--_c) no-repeat,
+    linear-gradient(#000 0 0) left 0 top 0 / 100% calc(100% - var(--_s) - var(--_c) + 1px) no-repeat,
+    linear-gradient(#000 0 0) left 0 bottom var(--_s) / calc(100% - var(--_c) + 1px) var(--_c) no-repeat,
     radial-gradient(circle at top left, #000 calc(var(--_c) - 0.5px), #0000 var(--_c)) right 0
       bottom var(--_s) / var(--_c) var(--_c) no-repeat,
-    linear-gradient(#000 0 0) left 0 bottom 0 / calc(100% - var(--_s) - var(--_c)) var(--_s) no-repeat,
-    linear-gradient(#000 0 0) right var(--_s) bottom var(--_c) / var(--_c)
-      calc(var(--_s) - var(--_c)) no-repeat,
+    linear-gradient(#000 0 0) left 0 bottom 0 / calc(100% - var(--_s) - var(--_c) + 1px)
+      calc(var(--_s) + 1px) no-repeat,
+    linear-gradient(#000 0 0) right var(--_s) bottom calc(var(--_c) - 1px) / var(--_c)
+      calc(var(--_s) - var(--_c) + 2px) no-repeat,
     radial-gradient(circle at top left, #000 calc(var(--_c) - 0.5px), #0000 var(--_c)) right
       var(--_s) bottom 0 / var(--_c) var(--_c) no-repeat,
     radial-gradient(circle at bottom right, #0000 calc(var(--_r) - 0.5px), #000 var(--_r)) right
-      calc(var(--_s) - var(--_r)) bottom calc(var(--_s) - var(--_r)) / var(--_r) var(--_r) no-repeat;
+      calc(var(--_s) - var(--_r)) bottom calc(var(--_s) - var(--_r)) / calc(var(--_r) + 1px)
+      calc(var(--_r) + 1px) no-repeat;
 }
 
 /*

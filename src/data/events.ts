@@ -1,4 +1,5 @@
 import type { StaticImageData } from "next/image";
+import temporaryOffices from "@/assets/photos/collections/office-chairs.webp";
 import brandActivations from "@/assets/photos/events/brand-activations.webp";
 import corporateEvents from "@/assets/photos/events/corporate-events.webp";
 import exhibitions from "@/assets/photos/events/exhibitions.webp";
@@ -10,7 +11,7 @@ export type EventType = {
   slug: string;
   name: string;
   description: string;
-  /** Collections that suit this kind of event */
+  /** Slugs of the collections that suit this kind of event (src/data/collections.ts) */
   collections: string[];
   image: StaticImageData;
   /** CSS object-position for the photo */
@@ -22,7 +23,7 @@ export const eventTypes: EventType[] = [
     slug: "corporate-events",
     name: "Corporate events",
     description: "Conferences, launches and gala dinners with seating, lounges and stage furniture.",
-    collections: ["Office Chairs", "Sofas", "Tables"],
+    collections: ["office-chairs", "sofas", "tables"],
     image: corporateEvents,
     focus: "40% 50%",
   },
@@ -30,7 +31,7 @@ export const eventTypes: EventType[] = [
     slug: "weddings",
     name: "Weddings & celebrations",
     description: "Elegant lounges, dining chairs and décor for weddings, engagements and private parties.",
-    collections: ["Chairs", "Arm Chairs", "Accessories"],
+    collections: ["chairs", "arm-chairs", "accessories-appliances"],
     image: weddings,
     focus: "25% 60%",
   },
@@ -38,7 +39,7 @@ export const eventTypes: EventType[] = [
     slug: "exhibitions",
     name: "Exhibitions",
     description: "Stand furniture, bar stools and display pieces delivered to your hall on schedule.",
-    collections: ["Bar Stools", "Pouffes", "Accessories"],
+    collections: ["bar-stools", "pouffes", "accessories-appliances"],
     image: exhibitions,
     focus: "50% 50%",
   },
@@ -46,7 +47,7 @@ export const eventTypes: EventType[] = [
     slug: "brand-activations",
     name: "Brand activations",
     description: "Bold, photogenic setups for pop-ups, retail activations and experiential marketing.",
-    collections: ["Arm Chairs", "Pouffes", "Tables"],
+    collections: ["arm-chairs", "pouffes", "tables"],
     image: brandActivations,
     focus: "55% 50%",
   },
@@ -54,7 +55,7 @@ export const eventTypes: EventType[] = [
     slug: "fit-out-projects",
     name: "Fit-out projects",
     description: "Project-based furniture for offices, show units and hospitality spaces.",
-    collections: ["Office Chairs", "Sofas", "Furniture Sets"],
+    collections: ["office-chairs", "sofas", "furniture-sets"],
     image: fitOutProjects,
     focus: "40% 65%",
   },
@@ -62,8 +63,21 @@ export const eventTypes: EventType[] = [
     slug: "outdoor-events",
     name: "Outdoor events",
     description: "Outdoor lounges, umbrellas and dining sets for gardens, terraces and courtyards.",
-    collections: ["Furniture Sets", "Sofas", "Accessories"],
+    collections: ["furniture-sets", "sofas", "accessories-appliances"],
     image: outdoorEvents,
     focus: "50% 70%",
   },
+  {
+    slug: "temporary-offices",
+    name: "Temporary offices",
+    description: "Desks, meeting tables and office chairs for project sites, site offices and short-term teams.",
+    collections: ["office-chairs", "tables", "sofas"],
+    // SAMPLE PHOTO: shared with the Office Chairs collection until a real site-office photo is available
+    image: temporaryOffices,
+    focus: "60% 50%",
+  },
 ];
+
+export function getEventType(slug: string) {
+  return eventTypes.find((event) => event.slug === slug);
+}

@@ -22,8 +22,8 @@ const statement = [
 
 const companies = [
   { label: "Part of", name: "Hi-Life Group" },
-  { label: "Company", name: "Palm Corner Events L.L.C SP" },
-  { label: "Sister company", name: "VK Exhibitions & Decor Industry LLC" },
+  { label: "Company", name: "Hi-Life Furniture Rentals" },
+  { label: "Part of", name: "VK Exhibitions & Decor Industry LLC" },
 ];
 
 export function AboutSection() {

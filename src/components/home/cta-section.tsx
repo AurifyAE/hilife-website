@@ -13,7 +13,8 @@ import { quoteHref, site } from "@/lib/site";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-export function CtaSection() {
+/** Closing quote band. Event pages pass an href that preselects their event type on the quote form. */
+export function CtaSection({ href = quoteHref }: { href?: string }) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -64,7 +65,7 @@ export function CtaSection() {
             and come back to you with a quote.
           </p>
           <div data-cta-reveal className="mt-10 flex flex-wrap gap-3">
-            <ButtonLink href={quoteHref} variant="forest">
+            <ButtonLink href={href} variant="forest">
               Request a Quote
               <ArrowRightIcon className="size-4" />
             </ButtonLink>
@@ -77,7 +78,7 @@ export function CtaSection() {
 
         <div data-cta-photo className="lg:col-span-5">
           <NotchCard
-            href={quoteHref}
+            href={href}
             label="Request a quote"
             className="aspect-[4/3] lg:aspect-[4/5]"
             cardClassName="rounded-[1.25rem] bg-forest-900 lg:rounded-[1.75rem]"
