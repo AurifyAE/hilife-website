@@ -3,17 +3,30 @@ import Link from "next/link";
 import { NotchCard } from "@/components/ui/notch-card";
 import { collections } from "@/data/collections";
 import type { EventType } from "@/data/events";
+import { cx } from "@/lib/cx";
 
 /** Photo card for one event type: notched photo, then number, name, description and suitable collections */
-export function EventCard({ event, index }: { event: EventType; index: number }) {
+export function EventCard({
+  event,
+  index,
+  className,
+  photoClassName,
+}: {
+  event: EventType;
+  index: number;
+  /** Grid placement */
+  className?: string;
+  /** Aspect ratio overrides for wide cards */
+  photoClassName?: string;
+}) {
   const href = `/events/${event.slug}`;
 
   return (
-    <article className="flex flex-col gap-5">
+    <article className={cx("flex flex-col gap-5", className)}>
       <NotchCard
         href={href}
         label={event.name}
-        className="aspect-[4/3]"
+        className={cx("aspect-[4/3]", photoClassName)}
         cardClassName="rounded-[1.25rem] bg-forest-900 lg:rounded-[1.5rem]"
         actionClassName="bg-copper-500 text-white group-hover:bg-forest-900"
         notch={{ size: "3.5rem" }}

@@ -9,11 +9,11 @@ import { FaqList } from "@/components/events/faq-list";
 import { ProcessSteps } from "@/components/events/process-steps";
 import { CtaSection } from "@/components/home/cta-section";
 import { ArrowRightIcon } from "@/components/icons";
+import { EventPhotos } from "@/components/portfolio/event-photos";
 import { ButtonLink } from "@/components/ui/button-link";
 import { NotchCard } from "@/components/ui/notch-card";
 import { eventDetails, type EventDetails } from "@/data/event-details";
 import { eventTypes, getEventType } from "@/data/events";
-import { featuredProjects } from "@/data/projects";
 import { collectionCounts, getCollection, products } from "@/lib/catalogue";
 import { quoteHref } from "@/lib/site";
 
@@ -49,7 +49,6 @@ export default async function EventPage({ params }: PageProps<"/events/[event]">
   const quote = `${quoteHref}?event=${event.slug}`;
   const suitedCollections = event.collections.map(getCollection).filter((collection) => collection !== undefined);
   const pieces = popularPieces(details);
-  const project = featuredProjects.find((item) => item.eventSlug === event.slug);
   const otherEvents = eventTypes.filter((item) => item.slug !== event.slug);
   const lowerName = event.name.toLowerCase();
 
@@ -187,52 +186,7 @@ export default async function EventPage({ params }: PageProps<"/events/[event]">
 
       <ProcessSteps />
 
-      {project && (
-        <section aria-labelledby="project-heading" className="container-site section-y">
-          <div className="grid items-center gap-8 lg:grid-cols-12 lg:gap-14">
-            <div className="lg:col-span-7">
-              <NotchCard
-                href={`/portfolio/${project.slug}`}
-                label={project.title}
-                className="aspect-[4/3]"
-                cardClassName="rounded-[1.25rem] bg-forest-900 lg:rounded-[1.75rem]"
-                actionClassName="bg-copper-500 text-white group-hover:bg-forest-900"
-                notch={{ size: "clamp(3.25rem, 2.5rem + 1.5vw, 4.25rem)" }}
-              >
-                <Image
-                  src={project.image}
-                  alt=""
-                  fill
-                  placeholder="blur"
-                  sizes="(min-width: 1024px) 58vw, 100vw"
-                  style={{ objectPosition: project.focus }}
-                  className="object-cover transition-[scale] duration-700 ease-out group-hover:scale-105"
-                />
-              </NotchCard>
-            </div>
-            <div className="lg:col-span-5">
-              <div className="flex flex-wrap items-center gap-3">
-                <p className="eyebrow text-copper-600">From our portfolio</p>
-                {project.sample && (
-                  <span className="rounded-full bg-copper-100 px-2.5 py-0.5 text-[0.75rem] font-medium text-copper-700">
-                    Sample project
-                  </span>
-                )}
-              </div>
-              <h2 id="project-heading" className="mt-4 text-h3 text-forest-900">
-                {project.title}
-              </h2>
-              <p className="mt-2 text-small font-medium text-stone">
-                {project.location} · {project.eventType}
-              </p>
-              <p className="mt-5 text-stone">{project.summary}</p>
-              <div className="mt-8">
-                <ArrowLink href={`/portfolio/${project.slug}`}>View project</ArrowLink>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
+      <EventPhotos eventSlug={event.slug} />
 
       <FaqList faqs={details.faqs} />
 

@@ -2,8 +2,6 @@ import type { StaticImageData } from "next/image";
 import temporaryOffices from "@/assets/photos/collections/office-chairs.webp";
 import brandActivations from "@/assets/photos/events/brand-activations.webp";
 import corporateEvents from "@/assets/photos/events/corporate-events.webp";
-import exhibitions from "@/assets/photos/events/exhibitions.webp";
-import fitOutProjects from "@/assets/photos/events/fit-out-projects.webp";
 import outdoorEvents from "@/assets/photos/events/outdoor-events.webp";
 import weddings from "@/assets/photos/events/weddings.webp";
 
@@ -20,10 +18,10 @@ export type EventType = {
 
 export const eventTypes: EventType[] = [
   {
-    slug: "corporate-events",
-    name: "Corporate events",
-    description: "Conferences, launches and gala dinners with seating, lounges and stage furniture.",
-    collections: ["office-chairs", "sofas", "tables"],
+    slug: "corporate-events-and-exhibitions",
+    name: "Corporate events & exhibitions",
+    description: "Conferences, launches, gala dinners and exhibition stands, with seating, lounges and tables delivered on schedule.",
+    collections: ["bar-stools", "sofas", "tables"],
     image: corporateEvents,
     focus: "40% 50%",
   },
@@ -36,28 +34,12 @@ export const eventTypes: EventType[] = [
     focus: "25% 60%",
   },
   {
-    slug: "exhibitions",
-    name: "Exhibitions",
-    description: "Stand furniture, bar stools and display pieces delivered to your hall on schedule.",
-    collections: ["bar-stools", "pouffes", "accessories-appliances"],
-    image: exhibitions,
-    focus: "50% 50%",
-  },
-  {
     slug: "brand-activations",
     name: "Brand activations",
     description: "Bold, photogenic setups for pop-ups, retail activations and experiential marketing.",
     collections: ["arm-chairs", "pouffes", "tables"],
     image: brandActivations,
     focus: "55% 50%",
-  },
-  {
-    slug: "fit-out-projects",
-    name: "Fit-out projects",
-    description: "Project-based furniture for offices, show units and hospitality spaces.",
-    collections: ["office-chairs", "sofas", "furniture-sets"],
-    image: fitOutProjects,
-    focus: "40% 65%",
   },
   {
     slug: "outdoor-events",

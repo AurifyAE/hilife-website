@@ -68,8 +68,8 @@ There are two parts:
 ## A2. Sitemap
 - **Header nav:** Furniture · Events · Portfolio · Contact · [Request a Quote]
 - **Furniture:** Collections → Catalogue listing → Product detail
-- **Events:** service pages per event type (Corporate, Weddings, Exhibitions, Brand activations, Fit-outs, Outdoor, Office/temporary)
-- **Portfolio:** listing → project
+- **Events:** service pages per event type (Corporate events & exhibitions, Weddings & celebrations, Brand activations, Outdoor events, Temporary offices)
+- **Portfolio:** photo gallery, each photo tagged with an event type (filterable; no written case studies)
 - **Contact**
 - **Footer:** About (incl. Palm Corner Events & VK Exhibitions), Catalogue download, Privacy, Terms
 - **Utility:** Enquiry list, Quote form, Thank-you page
@@ -126,7 +126,7 @@ Home / Collections → Catalogue (filter, search) → Product page → Add to En
 
 **A-7 Portfolio**
 *As a planner, I want to see completed setups, so that I can picture the result.*
-- Each project shows location, event type, gallery, furniture used (linked) and a quote CTA.
+- Photos only (no case studies yet): each photo is tagged with an event type, the gallery filters by it, photos open full size, and each event page shows its own photos.
 
 **A-8 Contact & catalogue download**
 - The contact form also creates a lead, with source "Contact form".

@@ -15,21 +15,22 @@ export type EventDetails = {
 };
 
 export const eventDetails: Record<string, EventDetails> = {
-  "corporate-events": {
-    headline: "Seating, lounges and tables that make a company event run smoothly.",
+  "corporate-events-and-exhibitions": {
+    headline: "Seating, lounges and stand furniture for conferences, launches and trade shows.",
     intro:
-      "From a product launch to a two-day conference, we supply the furniture your guests use all day: comfortable seating for sessions, networking lounges between them and tables for dinners and breakouts.",
+      "From a two-day conference to an exhibition stand, we supply the furniture guests use all day: seating for sessions, networking lounges, high tables for conversations and dining for gala dinners. Tell us the venue, dates and build times, and we plan delivery and collection around them.",
     highlights: [
-      { title: "Zones for every part of the day", text: "Theatre seating, breakout areas, VIP lounges and dining can all come from one list." },
-      { title: "Matched to your brand", text: "Pick colours and finishes that suit your stage, signage and venue." },
-      { title: "Planned around the venue", text: "Share your floor plan and schedule, and we plan delivery and collection around them." },
+      { title: "Zones for every part of the day", text: "Session seating, breakout areas, VIP lounges and dining can all come from one list." },
+      { title: "Stands and hospitality areas", text: "Bar stools, high tables, pouffes and lounge seating for meetings on the stand." },
+      { title: "Built around the schedule", text: "Share your floor plan, build and breakdown times, and we plan delivery and collection around them." },
     ],
     faqs: [
-      { question: "Can you furnish several areas of one venue?", answer: "Yes. Add everything you need to one enquiry and mention the areas in your notes, such as the main hall, breakout rooms and a VIP lounge." },
+      { question: "What should we include in the enquiry?", answer: "The venue, the event or show dates, build and breakdown times if it's an exhibition, and the pieces you need. A floor plan or stand plan helps, and you can attach it to the form." },
+      { question: "Can you furnish several areas or stands?", answer: "Yes. Add everything to one enquiry and note the areas in your notes, such as the main hall, a VIP lounge or each stand number." },
+      { question: "Do you work with agencies and exhibition contractors?", answer: "Yes. Choose Event agency or Exhibition contractor in the form and add your client's details in the notes." },
       { question: "Can we match our brand colours?", answer: "Use the colour filter in the catalogue to find pieces in your colours, or describe your theme in the quote form and we'll suggest options." },
-      { question: "Do you work with event agencies?", answer: "Yes. Agencies can send one enquiry per event with the client's dates and venue, and we reply with a quote for that event." },
     ],
-    featured: ["HLR-DSC0006BK", "HLR-MOC0007B", "HLR-VIP0006GY", "HLR-CRS0007BK", "HLR-BAC0002WT", "HLR-RMT0006BK", "HLR-RBT0010", "HLR-RCT0003SG"],
+    featured: ["HLR-TB010BK", "HLR-MBT0005WT", "HLR-VIP0006GY", "HLR-CRS0007BK", "HLR-DSC0006BK", "HLR-RBT0010", "HLR-PF0001WT", "HLR-BH0001ST"],
   },
   weddings: {
     headline: "Lounges, dining chairs and details for a day that looks exactly as planned.",
@@ -47,22 +48,6 @@ export const eventDetails: Record<string, EventDetails> = {
     ],
     featured: ["HLR-BC0017BG", "HLR-SC00019CM", "HLR-GDC0040BG", "HLR-CAC0041", "HLR-LTS0039BG", "HLR-HC00020WT", "HLR-BRP0002BG", "HLR-ACL0001BK"],
   },
-  exhibitions: {
-    headline: "Stand furniture that arrives on build day and leaves when the show closes.",
-    intro:
-      "Exhibition stands work to fixed build and breakdown times. Send us your stand list with the hall, stand number and dates, and we'll plan delivery and collection around the show schedule.",
-    highlights: [
-      { title: "Meeting and hospitality areas", text: "Bar stools, high tables, pouffes and lounge seating for conversations on the stand." },
-      { title: "Built around show times", text: "Tell us the build and breakdown windows and we plan around them." },
-      { title: "One list for several stands", text: "Exhibiting with partners or in more than one hall? Note each stand in the same enquiry." },
-    ],
-    faqs: [
-      { question: "What should we include in the enquiry?", answer: "The venue, hall and stand number, the build and breakdown dates, and the pieces you need. A stand plan helps, and you can attach it to the form." },
-      { question: "Do you supply stand builders and contractors?", answer: "Yes. Exhibition contractors can enquire on behalf of their clients. Just choose Exhibition contractor in the form." },
-      { question: "Can we see what a piece looks like before booking?", answer: "Each product page has photos, dimensions and colours. If you need more detail, ask in your enquiry and our team will help." },
-    ],
-    featured: ["HLR-TB010BK", "HLR-MLB0013BK", "HLR-SB0002WT", "HLR-MBT0005WT", "HLR-CT0008WT", "HLR-PF0001WT", "HLR-BH0001ST", "HLR-GDF0002WT"],
-  },
   "brand-activations": {
     headline: "Photogenic, on-brand setups for pop-ups and experiential campaigns.",
     intro:
@@ -78,22 +63,6 @@ export const eventDetails: Record<string, EventDetails> = {
       { question: "Can an agency enquire for a client?", answer: "Yes. Choose Event agency in the form and add the client and campaign details in your notes." },
     ],
     featured: ["HLR-BAC0039GN", "HLR-OC0030GN", "HLR-WAC0044BU", "HLR-BOP0004BL", "HLR-BWP0003WB", "HLR-SB0002RD", "HLR-TS0013WT", "HLR-GPC0017"],
-  },
-  "fit-out-projects": {
-    headline: "Furnished spaces for show units, offices and hospitality projects.",
-    intro:
-      "Fit-out projects often need furniture for weeks or months rather than a single day. Rent lounge sets, sofas and office seating to finish show apartments, sales centres and interim spaces.",
-    highlights: [
-      { title: "Complete looks", text: "Coordinated sofas, tables and furniture sets that finish a space." },
-      { title: "Longer rental periods", text: "Tell us the start and end dates of the project and we quote for the full period." },
-      { title: "Several units at once", text: "Furnish more than one unit or floor from a single enquiry." },
-    ],
-    faqs: [
-      { question: "Can we rent furniture for several weeks?", answer: "Yes. Give the start date as the event date and mention the rental period in your notes." },
-      { question: "Can you furnish more than one unit?", answer: "Yes. List the pieces for each unit in your notes, or send one enquiry per unit if that's easier to track." },
-      { question: "Can we send a floor plan?", answer: "Yes. Attach the floor plan to the quote form and it helps us check the pieces fit." },
-    ],
-    featured: ["HLR-LTS0042BG", "HLR-MHS0040BG", "HLR-SL0038BG", "HLR-DBC0015BG", "HLR-HCT0028WT", "HLR-DS0001TC", "HLR-TAM0050", "HLR-ESC0001WT"],
   },
   "outdoor-events": {
     headline: "Outdoor lounges and dining sets for gardens, terraces and courtyards.",

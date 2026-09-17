@@ -92,7 +92,7 @@ export function SiteFooter() {
               <Logo tone="light" className="h-14" />
             </Link>
             <p className="mt-6 max-w-xs text-small text-cream-50/60">
-              Premium rental furniture for events, exhibitions and fit-outs across the UAE.
+              Premium rental furniture for events, exhibitions and temporary offices across the UAE.
             </p>
             <ul className="mt-8 space-y-3 text-small">
               <li>
