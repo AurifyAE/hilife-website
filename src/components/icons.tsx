@@ -155,6 +155,24 @@ export function MapPinIcon(props: IconProps) {
   );
 }
 
+export function WhatsAppIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M3.5 20.5 5 16.1A8.5 8.5 0 1 1 8.2 19z" />
+      <path d="M9 8.6c0 3.4 3 6.4 6.4 6.4l1.1-1.7-2.1-1-1 .9a4.5 4.5 0 0 1-2.1-2.1l.9-1-1-2.1z" />
+    </svg>
+  );
+}
+
+export function ClockIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v5l3 2" />
+    </svg>
+  );
+}
+
 export function PhoneIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>

@@ -6,25 +6,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { useRef } from "react";
 import { ArrowRightIcon } from "@/components/icons";
+import { brandStatement, groupCompanies } from "@/data/about";
 import { cx } from "@/lib/cx";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-// Copy from the Hi-Life rental catalogue
-const statement = [
-  { text: "From empty space to", accent: false },
-  { text: "unforgettable place.", accent: true },
-  {
-    text: "Great events are remembered for how they feel. We bring the furniture, the flexibility and the expertise to turn your vision into a space worth remembering.",
-    accent: false,
-  },
-];
-
-const companies = [
-  { label: "Part of", name: "Hi-Life Group" },
-  { label: "Company", name: "Hi-Life Furniture Rentals" },
-  { label: "Part of", name: "VK Exhibitions & Decor Industry LLC" },
-];
+const statement = brandStatement;
 
 export function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -87,8 +74,8 @@ export function AboutSection() {
         <div ref={groupRef} className="mt-16 grid gap-10 border-t border-cream-50/15 pt-10 lg:mt-24 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-5">
             <p data-about-reveal className="max-w-md text-cream-50/70">
-              Hi-Life Furniture Rentals is part of the Hi-Life Group and a sister company of VK
-              Exhibitions &amp; Decor Industry LLC, based in Sharjah and delivering across the UAE.
+              Hi-Life Furniture Rentals is part of the Hi-Life Group and works alongside VK Exhibitions
+              &amp; Decor Industry LLC. We&apos;re based in Sharjah and deliver across the UAE.
             </p>
             <Link
               data-about-reveal
@@ -103,15 +90,16 @@ export function AboutSection() {
           </div>
 
           <ul className="grid gap-3 sm:grid-cols-3 lg:col-span-7">
-            {companies.map((company) => (
+            {/* Same companies and labels as the About page */}
+            {groupCompanies.map((company) => (
               <li
                 key={company.name}
                 data-about-reveal
-                className="flex flex-col justify-between gap-6 rounded-[1.25rem] border border-cream-50/15 p-5 lg:p-6"
+                className="flex flex-col gap-6 rounded-[1.25rem] border border-cream-50/15 p-5 lg:p-6"
               >
-                <span className="eyebrow text-copper-300">{company.label}</span>
+                {company.role && <span className="eyebrow text-copper-300">{company.role}</span>}
                 {/* Text mark until the company logos are supplied */}
-                <span className="text-h6 text-cream-50">{company.name}</span>
+                <span className="mt-auto text-h6 text-cream-50">{company.name}</span>
               </li>
             ))}
           </ul>

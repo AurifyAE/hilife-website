@@ -1,3 +1,5 @@
+import { isValidEmail, isValidPhone, sendLead } from "@/lib/leads";
+
 /** What the quote page needs to show a product in the enquiry summary */
 export type QuoteProduct = {
   code: string;
@@ -94,10 +96,9 @@ export function validateQuote(values: QuoteValues, itemCount: number): QuoteErro
   if (text(values.name).length < 2) errors.name = "Enter your name";
   if (!text(values.company)) errors.company = "Enter your company name";
   if (!text(values.email)) errors.email = "Enter your email address";
-  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(text(values.email))) errors.email = "Enter a valid email address";
-  const digits = values.phone.replace(/[\s()+-]/g, "");
-  if (!digits) errors.phone = "Enter your phone number";
-  else if (!/^\d{7,15}$/.test(digits)) errors.phone = "Enter a valid phone number";
+  else if (!isValidEmail(values.email)) errors.email = "Enter a valid email address";
+  if (!text(values.phone)) errors.phone = "Enter your phone number";
+  else if (!isValidPhone(values.phone)) errors.phone = "Enter a valid phone number";
   if (itemCount === 0 && !text(values.message)) {
     errors.message = "Your enquiry list is empty, so tell us what furniture you need";
   }
@@ -110,10 +111,7 @@ export function validateQuote(values: QuoteValues, itemCount: number): QuoteErro
 
 export type QuoteItem = { code: string; name: string; quantity: number };
 
-/**
- * Sends the request to the lead backend as multipart form data (so the attachment travels with it).
- * The site is a static export, so the endpoint lives outside Next.js and is set at build time.
- */
+/** Sends the quote request, with the enquiry list and any attachment, to the lead backend */
 export async function sendQuoteRequest(values: QuoteValues, items: QuoteItem[]) {
   const body = new FormData();
   body.set("source", "Quote form");
@@ -123,18 +121,5 @@ export async function sendQuoteRequest(values: QuoteValues, items: QuoteItem[]) 
     else if (value) body.set(key, typeof value === "string" ? value.trim() : value);
   }
   body.set("items", JSON.stringify(items));
-
-  const endpoint = process.env.NEXT_PUBLIC_QUOTE_ENDPOINT;
-  if (!endpoint) {
-    if (process.env.NODE_ENV === "development") {
-      // No backend yet: pretend it worked so the flow can be tried out locally
-      console.info("Quote request (not sent, no NEXT_PUBLIC_QUOTE_ENDPOINT)", Object.fromEntries(body));
-      await new Promise((resolve) => setTimeout(resolve, 900));
-      return;
-    }
-    throw new Error("Quote endpoint is not configured");
-  }
-
-  const response = await fetch(endpoint, { method: "POST", body });
-  if (!response.ok) throw new Error(`Quote request failed with ${response.status}`);
+  await sendLead(body);
 }

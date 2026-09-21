@@ -138,7 +138,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 flex flex-col gap-4 border-t border-cream-50/10 pt-6 text-[0.8125rem] text-cream-50/50 md:flex-row md:items-center md:justify-between lg:mt-14">
-          <p>© 2026 Hi-Life Furniture Rentals · Palm Corner Events L.L.C SP</p>
+          <p>© 2026 Hi-Life Furniture Rentals</p>
           <div className="flex flex-wrap items-center gap-6">
             <Link href="/privacy" className="transition-colors hover:text-cream-50">
               Privacy
