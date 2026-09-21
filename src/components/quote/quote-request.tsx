@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useEffectEvent, useMemo, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
 import { AlertIcon, ArrowRightIcon, CheckIcon } from "@/components/icons";
@@ -392,6 +393,13 @@ export function QuoteRequest({ catalogue, events }: Props) {
               )}
             </p>
           </div>
+          <p className="mt-5 text-[0.8125rem] text-stone">
+            We only use your details to reply to this request. See our{" "}
+            <Link href="/privacy" className="font-semibold text-forest-900 underline underline-offset-4">
+              Privacy Policy
+            </Link>
+            .
+          </p>
           <p role="status" className="sr-only">
             {sending ? "Sending your quote request" : ""}
           </p>
