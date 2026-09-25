@@ -14,7 +14,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { NotchCard } from "@/components/ui/notch-card";
 import { eventDetails, type EventDetails } from "@/data/event-details";
 import { eventTypes, getEventType } from "@/data/events";
-import { collectionCounts, getCollection, products } from "@/lib/catalogue";
+import { collectionCounts, getCollection, products, withCardPhoto } from "@/lib/catalogue";
 import { quoteHref } from "@/lib/site";
 
 // Static export: one page per event type, generated at build time
@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: PageProps<"/events/[event]">)
   return {
     title: `${event.name} Furniture Rental`,
     description: `${details.headline} ${event.description}`,
+    alternates: { canonical: `/events/${event.slug}` },
   };
 }
 
@@ -38,7 +39,8 @@ export async function generateMetadata({ params }: PageProps<"/events/[event]">)
 function popularPieces(details: EventDetails) {
   return details.featured
     .map((code) => products.find((product) => product.code === code))
-    .filter((product) => product !== undefined);
+    .filter((product) => product !== undefined)
+    .map(withCardPhoto);
 }
 
 export default async function EventPage({ params }: PageProps<"/events/[event]">) {

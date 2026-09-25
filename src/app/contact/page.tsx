@@ -7,6 +7,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { quoteHref, site } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "Contact",
   description: `Call, WhatsApp or email Hi-Life Furniture Rentals, or visit our showroom in Al Sajaa, Sharjah. ${site.phone}.`,
 };

@@ -8,6 +8,7 @@ import { site } from "@/lib/site";
 // update it when the lead admin, WhatsApp alerts or analytics go live.
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/privacy" },
   title: "Privacy Policy",
   description: "How Hi-Life Furniture Rentals collects, uses and protects the details you share through this website.",
 };

@@ -8,6 +8,7 @@ import { quoteHref, site } from "@/lib/site";
 // governing law section.
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms" },
   title: "Terms of Use",
   description: "The terms for using the Hi-Life Furniture Rentals website and sending enquiries through it.",
 };

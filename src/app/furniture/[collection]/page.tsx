@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { CatalogueBrowser } from "@/components/catalogue/catalogue-browser";
 import { CatalogueHeader } from "@/components/catalogue/catalogue-header";
 import { collections } from "@/data/collections";
-import { collectionCounts, getCollection, getProductsIn, products } from "@/lib/catalogue";
+import { collectionCounts, getCollection, getProductsIn, products, withCardPhoto } from "@/lib/catalogue";
 
 // Static export: only the nine collections exist
 export const dynamicParams = false;
@@ -15,7 +15,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps<"/furniture/[collection]">): Promise<Metadata> {
   const collection = getCollection((await params).collection);
   if (!collection) return {};
-  return { title: `${collection.name} for rent`, description: collection.description };
+  return {
+    title: `${collection.name} for rent`,
+    description: collection.description,
+    alternates: { canonical: `/furniture/${collection.slug}` },
+  };
 }
 
 export default async function CollectionPage({ params }: PageProps<"/furniture/[collection]">) {
@@ -35,7 +39,7 @@ export default async function CollectionPage({ params }: PageProps<"/furniture/[
       />
       <div className="pb-24 lg:pb-32">
         <CatalogueBrowser
-          products={getProductsIn(slug)}
+          products={getProductsIn(slug).map(withCardPhoto)}
           activeCollection={slug}
           collectionCounts={collectionCounts}
           total={products.length}

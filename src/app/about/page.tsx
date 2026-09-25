@@ -11,6 +11,7 @@ import { brandStatement, groupCompanies } from "@/data/about";
 import { cx } from "@/lib/cx";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/about" },
   title: "About",
   description:
     "Hi-Life Furniture Rentals supplies rental furniture for corporate events, exhibitions, weddings and temporary offices across the UAE, from Al Sajaa, Sharjah.",

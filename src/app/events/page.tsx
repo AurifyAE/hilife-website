@@ -12,6 +12,7 @@ import { cx } from "@/lib/cx";
 import { quoteHref } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/events" },
   title: "Event Furniture Rental",
   description:
     "Rental furniture for corporate events and exhibitions, weddings, brand activations, outdoor events and temporary offices, delivered across the UAE.",

@@ -7,7 +7,7 @@ import { ProductCard } from "@/components/catalogue/product-card";
 import { CheckIcon, CloseIcon, SearchIcon, SlidersIcon } from "@/components/icons";
 import { Select, type SelectOption } from "@/components/ui/select";
 import { collections } from "@/data/collections";
-import { colourSwatch, isOutdoor, type Product } from "@/lib/catalogue";
+import { colourSwatch, isOutdoor, type CatalogueProduct } from "@/lib/product-display";
 import { cx } from "@/lib/cx";
 import { getLenis } from "@/lib/lenis";
 
@@ -27,7 +27,8 @@ const SORT_OPTIONS: SelectOption<Sort>[] = [
 const PAGE_SIZE = 18;
 
 type Props = {
-  products: Product[];
+  /** Photos come from the server so the browser never loads the full photo map */
+  products: CatalogueProduct[];
   /** Collection slug of the current page, or null on /furniture */
   activeCollection: string | null;
   collectionCounts: Record<string, number>;

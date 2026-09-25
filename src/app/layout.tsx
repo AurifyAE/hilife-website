@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { site, siteUrl } from "@/lib/site";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -12,13 +13,19 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
+const title = "Hi-Life Furniture Rentals | Event Furniture Rental in the UAE";
+const description =
+  "Premium rental furniture for corporate events, weddings, exhibitions and hospitality, delivered across the UAE.";
+
 export const metadata: Metadata = {
-  title: {
-    default: "Hi-Life Furniture Rentals | Event Furniture Rental in the UAE",
-    template: "%s | Hi-Life Furniture Rentals",
-  },
-  description:
-    "Premium rental furniture for corporate events, weddings, exhibitions and hospitality, delivered across the UAE.",
+  // Lets pages use paths ("/about") for canonical links and share images
+  metadataBase: new URL(siteUrl),
+  title: { default: title, template: "%s | Hi-Life Furniture Rentals" },
+  description,
+  alternates: { canonical: "/" },
+  // No title or description here: each page's own ones are used for share previews
+  openGraph: { type: "website", siteName: site.name, locale: "en_AE" },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {

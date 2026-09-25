@@ -8,15 +8,20 @@ import { ProductEnquiryActions } from "@/components/catalogue/product-enquiry-ac
 import { ProductGallery } from "@/components/catalogue/product-gallery";
 import { ProductPhoto } from "@/components/catalogue/product-photo";
 import { ArrowRightIcon } from "@/components/icons";
+import { JsonLd } from "@/components/json-ld";
 import {
+  cardPhoto,
   colourSwatch,
   dimensionParts,
   getCollection,
   getProduct,
   getProductsIn,
+  productHref,
   productPhotoSet,
   products,
+  withCardPhoto,
 } from "@/lib/catalogue";
+import { site, siteUrl } from "@/lib/site";
 
 // Static export: every product page is generated at build time
 export const dynamicParams = false;
@@ -32,6 +37,7 @@ export async function generateMetadata({ params }: PageProps<"/furniture/[collec
   return {
     title: `${product.name} (${product.code})`,
     description: product.description || `${product.name}, available to rent for events across the UAE.`,
+    alternates: { canonical: productHref(product) },
   };
 }
 
@@ -44,10 +50,25 @@ export default async function ProductPage({ params }: PageProps<"/furniture/[col
   const photos = productPhotoSet(product);
   const related = getProductsIn(collection.slug)
     .filter((item) => item.slug !== product.slug)
-    .slice(0, 4);
+    .slice(0, 4)
+    .map(withCardPhoto);
+
+  const card = cardPhoto(product);
 
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: product.name,
+          sku: product.code,
+          category: collection.name,
+          description: product.description || `${product.name} available to rent from Hi-Life Furniture Rentals.`,
+          brand: { "@type": "Brand", name: site.name },
+          ...(card ? { image: `${siteUrl}${card.src}` } : {}),
+        }}
+      />
       <div className="container-site pt-28 lg:pt-36">
         <Breadcrumbs
           items={[
@@ -63,7 +84,13 @@ export default async function ProductPage({ params }: PageProps<"/furniture/[col
               <ProductGallery name={product.name} images={photos.images} />
             ) : (
               <div className="relative aspect-square overflow-hidden rounded-[1.75rem] bg-studio">
-                <ProductPhoto product={product} sizes="(min-width: 1024px) 55vw, 100vw" preload />
+                <ProductPhoto
+                  photo={cardPhoto(product)}
+                  name={product.name}
+                  code={product.code}
+                  sizes="(min-width: 1024px) 55vw, 100vw"
+                  preload
+                />
               </div>
             )}
           </div>

@@ -4,6 +4,7 @@ import { CtaSection } from "@/components/home/cta-section";
 import { PortfolioBrowser } from "@/components/portfolio/portfolio-browser";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/portfolio" },
   title: "Portfolio",
   description:
     "Photos of Hi-Life rental furniture set up at corporate events, exhibitions, weddings, brand activations and outdoor events across the UAE.",

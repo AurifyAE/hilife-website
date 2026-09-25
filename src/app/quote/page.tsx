@@ -6,6 +6,7 @@ import { getCollection, productHref, productPhotoSet, products } from "@/lib/cat
 import type { QuoteProduct } from "@/lib/quote";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/quote" },
   title: "Request a Quote",
   description:
     "Send your furniture list and event details, and the Hi-Life team will reply with availability and a quote for your dates anywhere in the UAE.",

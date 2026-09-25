@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { AddToEnquiryButton } from "@/components/catalogue/add-to-enquiry-button";
 import { ProductPhoto } from "@/components/catalogue/product-photo";
-import { colourSwatch, dimensionParts, productHref, type Product } from "@/lib/catalogue";
+import { colourSwatch, dimensionParts, productHref, type CatalogueProduct } from "@/lib/product-display";
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({ product }: { product: CatalogueProduct }) {
   const href = productHref(product);
 
   return (
@@ -16,7 +16,9 @@ export function ProductCard({ product }: { product: Product }) {
         className="relative block aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-studio"
       >
         <ProductPhoto
-          product={product}
+          photo={product.card}
+          name={product.name}
+          code={product.code}
           sizes="(min-width: 1536px) 20vw, (min-width: 640px) 26vw, 45vw"
           className="transition-transform duration-700 ease-out group-hover:scale-[1.04]"
         />
